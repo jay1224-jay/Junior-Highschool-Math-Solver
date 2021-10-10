@@ -177,4 +177,10 @@ simultaneous_equations( EQUATION equation1, EQUATION equation2 )
     return {x, y};
 }
 
-
+float heronFormula(float sideA, float sideB, float sideC)
+{
+    float area,
+          s = (sideA + sideB + sideC)/2; // semi-perimeter
+    area = sqrt( s * (s-sideA) * (s-sideB) * (s-sideC) );
+    return area;
+}

@@ -51,9 +51,32 @@ int GCD(std::array<int, 50> nums, int length=2)
 可以發現, 我是用遞迴來解決多個數字求解
 
 ## lcm 最小公倍數
-我們知道 
-$$\sum_{n=1}^{10} n^2$$
+code:
+```c++
+#include<iostream>
+#include <array>
+using namespace std;
 
+array<int, 50> nums;
+int index=0, answer=0;
+array<int, 50> gcd_array;
+cout << "輸入數字, 用空格隔開: " ;
+while (cin>>nums[index]){
+    if(cin.get() == '\n') break;
+    index++;
+} 
+gcd_array[0] = nums[0];
+gcd_array[1] = nums[1];
+answer = nums[0]*nums[1]/GCD(gcd_array, 2); 
+for (int i=2;i<index+1;i++){
+    gcd_array[0] = answer; 
+    gcd_array[1] = nums[i];  
+    answer = gcd_array[0]*gcd_array[1]/G(gcd_array, 2);
+}
+cout << "最小公倍數是："  << answer << endl;
+
+```
+原理  ![](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Cdpi%7B200%7D%20%5Cbg_white%20lcm%28a%2Cb%29%3D%5Cfrac%7Ba%20%5Ccdot%20b%7D%7Bgcd%28a%2Cb%29%7D)
 
 ## area 座標求面積
 

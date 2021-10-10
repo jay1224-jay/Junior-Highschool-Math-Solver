@@ -7,6 +7,7 @@
 #include <iostream>
 #include <array>
 #include <string>
+#include <cmath>
 #include "math-solver.h"
 
 void clearcommand(void){
@@ -19,15 +20,25 @@ system("clear");
 #endif              
 }
 
+#define PI 3.14159265
+
 using namespace std;
 
 int reciver(string command)
 {
     if (command == "help"){
-        clearcommand();
         cout << "所有的命令： " << endl
-             << "gcd - 最大公因數  lcm - 最小公倍數  area - 座標求面積  se - 聯立方程式的解" << endl
-             << "help - 顯示所有用法  exit/quit - 關閉這個程式" << endl;
+             << " gcd        最大公因數 " << endl
+             << " lcm        最小公倍數 " << endl 
+             << " areap      座標求面積 " << endl 
+             << " se         聯立方程式的解" << endl
+             << " help       顯示所有用法 " << endl 
+             << " sin        sin " << endl
+             << " cos        cos " << endl
+             << " tan        tan " << endl
+             << " areas      get area from sides" << endl
+             << " exit/quit  關閉這個程式" << endl ;
+
     }
 
     else if (command == "gcd")
@@ -65,7 +76,7 @@ int reciver(string command)
 
     }
 
-    else if (command == "area")
+    else if (command == "areap")
     {
         float det[50][2];
         int index=0;
@@ -130,6 +141,32 @@ int reciver(string command)
 
     }
 
+    else if (command == "sin"){
+        float angle;
+        cout << "type angle" << endl;
+        cin >> angle ;
+        cout << "sin(" << angle << ") is " << sin(angle*PI/180) << endl;
+    }
+    else if (command == "cos"){
+        float angle;
+        cout << "type angle" << endl;
+        cin >> angle ;
+        cout << "cos(" << angle << ") is " << cos(angle*PI/180) << endl;
+    }
+    else if (command == "tan"){
+        float angle;
+        cout << "type angle" << endl;
+        cin >> angle ;
+        cout << "tan(" << angle << ") is " << tan(angle*PI/180) << endl;
+    }
+
+    else if (command == "areas"){
+        float a, b, c;
+        cout << "type 3 length of sides" << endl;
+        cin >> a >> b >> c;
+        cout << "area is " << heronFormula(a, b, c) << endl;
+    }
+
     else if (command == "exit" || command == "quit")
         return 1;
 
@@ -149,11 +186,10 @@ int main()
         cout << "你想要做什麼： " ;
         cin >> user_command ;
 
-        if (reciver(user_command)){
-            cout << "\n將會在10秒後結束\n" ;
-            sleep(10);
+        if (reciver(user_command))
             return 0;
-        }
+        
+        cout << endl ;
     }
     
     return 1;
