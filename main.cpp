@@ -1,6 +1,12 @@
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
 #include <iostream>
-#include <string>
 #include <array>
+#include <string>
 #include "math-solver.h"
 
 void clearcommand(void){
@@ -20,12 +26,14 @@ int reciver(string command)
     if (command == "help"){
         clearcommand();
         cout << "所有的命令： " << endl
-             << "gcd - 最大公因數  area - 座標求面積  help - 顯示所有用法  exit/quit - 關閉這個程式" << endl;
+             << "gcd - 最大公因數  lcm - 最小公倍數  area - 座標求面積  se - 聯立方程式的解" << endl
+             << "help - 顯示所有用法  exit/quit - 關閉這個程式" << endl;
     }
 
     else if (command == "gcd")
     {
-        int nums[50] = {}, index=0;
+        array<int, 50> nums;
+        int index=0;
         cout << "輸入數字, 用空格隔開: " ;
         while (cin>>nums[index]){
             if(cin.get() == '\n') break;
@@ -33,6 +41,28 @@ int reciver(string command)
         }
         
         cout << "最大公因數是： " << GCD(nums, index+1) << endl;
+    }
+
+    else if (command == "lcm")
+    {
+        array<int, 50> nums;
+        int index=0, answer=0;
+        array<int, 50> gcd_array;
+        cout << "輸入數字, 用空格隔開: " ;
+        while (cin>>nums[index]){
+            if(cin.get() == '\n') break;
+            index++;
+        } 
+        gcd_array[0] = nums[0];
+        gcd_array[1] = nums[1];
+        answer = nums[0]*nums[1]/GCD(gcd_array, 2); 
+        for (int i=2;i<index+1;i++){
+            gcd_array[0] = answer; 
+            gcd_array[1] = nums[i];  
+            answer = gcd_array[0]*gcd_array[1]/GCD(gcd_array, 2);
+        }
+        cout << "最小公倍數是："  << answer << endl;
+
     }
 
     else if (command == "area")
@@ -51,6 +81,53 @@ int reciver(string command)
         det[index+1][0] = det[0][0];
         det[index+1][1] = det[0][1];
         cout << "面積是 " << abs(DET(det, index+2)/2) << endl;
+    }
+
+    else if (command == "se"){
+        // 聯立方程式英文 simultaneous equations 
+        cout <<         "你有一個聯立方程式："                      << endl 
+             <<         "    2x + 3y = 80  "                        << endl 
+             <<         "     x - 3y = -50  "                   << endl 
+             << endl << "請輸入   "                             << endl 
+             <<         " 2 3 80 (按一下Enter) "              << endl
+             <<         " 1 -3 -50 (再按一下Enter) "            << endl 
+             << endl << "須輸入 \"1\""            << endl 
+             <<         "可以輸入小數點, 但分數不行" << endl ;
+        
+        /*
+        EQUATION a;
+        a.a = 10;
+        a.b = 20;
+        a.c = 30;
+        cout << simultaneous_equations(a, a) << endl; 
+        */
+
+        int stop=0;
+        EQUATION eq1, eq2;
+        
+        cin >> eq1.a >> eq1.b >>  eq1.c;  // ax+by=c
+
+        /*
+        if (stop) {
+            cout << "\n注意：\n如果係數是 1 , 你仍須輸入 \"1\" \n請依照格式輸入,輸入前有教學\n" ;
+            return 1;
+        }
+        */
+
+        stop=0;
+
+        cin >> eq2.a >> eq2.b >> eq2.c ; // ax+by=c
+
+        /*
+        if (stop){
+            cout << "\n注意：\n如果係數是 1 , 你仍須輸入 \"1\" \n請依照格式輸入,輸入前有教學\n" ;
+            return 1;
+        }
+        */
+
+        array<string, 2> answer = simultaneous_equations(eq1, eq2);
+        cout << "x = " << answer[0] << " y = " << answer[1] << endl;
+
     }
 
     else if (command == "exit" || command == "quit")
@@ -72,9 +149,12 @@ int main()
         cout << "你想要做什麼： " ;
         cin >> user_command ;
 
-        if (reciver(user_command))
+        if (reciver(user_command)){
+            cout << "\n將會在10秒後結束\n" ;
+            sleep(10);
             return 0;
-
+        }
     }
+    
     return 1;
 }
