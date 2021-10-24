@@ -4,8 +4,13 @@
 ##### 這個可以做什麼？
 - [gcd 最大公因數](#gcd-最大公因數)
 - [lcm 最小公倍數](#lcm-最小公倍數)
-- [area 座標求面積](#area-座標求面積)
+- [areap 座標求面積](#areap-座標求面積)
 - [se 二元一次聯立方程式求解](#se-二元一次聯立方程式求解)
+- sin sine
+- cos cosine
+- tan tangent
+- areas 邊長求面積
+- qe 一元二次方程式求解
 
 ##### 為什麼要做這個？
 - 花更少的時間在**計算**方面
@@ -78,7 +83,7 @@ cout << "最小公倍數是："  << answer << endl;
 ```
 原理  ![](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Cdpi%7B200%7D%20%5Cbg_white%20lcm%28a%2Cb%29%3D%5Cfrac%7Ba%20%5Ccdot%20b%7D%7Bgcd%28a%2Cb%29%7D)
 
-## area 座標求面積
+## areap 座標求面積
 
 
 ## se 二元一次聯立方程式求解
