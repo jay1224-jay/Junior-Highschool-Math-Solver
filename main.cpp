@@ -37,6 +37,7 @@ int reciver(string command)
              << " cos        cos " << endl
              << " tan        tan " << endl
              << " areas      get area from sides" << endl
+             << " qe         Quadratic equation"  << endl
              << " exit/quit  關閉這個程式" << endl ;
 
     }
@@ -113,7 +114,6 @@ int reciver(string command)
         cout << simultaneous_equations(a, a) << endl; 
         */
 
-        int stop=0;
         EQUATION eq1, eq2;
         
         cin >> eq1.a >> eq1.b >>  eq1.c;  // ax+by=c
@@ -125,7 +125,6 @@ int reciver(string command)
         }
         */
 
-        stop=0;
 
         cin >> eq2.a >> eq2.b >> eq2.c ; // ax+by=c
 
@@ -167,6 +166,21 @@ int reciver(string command)
         cout << "area is " << heronFormula(a, b, c) << endl;
     }
 
+    else if (command == "qe"){
+        float a, b, c;
+        array<float, 3> answer;
+        cin >> a >> b >> c;
+        
+
+        answer = QuadraticEquation(a, b, c);
+
+        if (answer[2]){
+            for (int i=0;i<3;i++)
+                cout << answer[i] << " ";
+        }
+        
+    }
+
     else if (command == "exit" || command == "quit")
         return 1;
 
@@ -175,6 +189,7 @@ int reciver(string command)
 
     return 0;
 }
+
 
 int main()
 {

@@ -184,3 +184,23 @@ float heronFormula(float sideA, float sideB, float sideC)
     area = sqrt( s * (s-sideA) * (s-sideB) * (s-sideC) );
     return area;
 }
+
+
+//  ax^2 + bx + c = 0
+//  x1 = (-b + sqrt(D))/2a
+//  x2 = (-b - sqrt(D))/2a
+// 
+
+std::array<float, 3> QuadraticEquation(float a, float b, float c)
+{
+    float x1, x2,
+          D = b*b-4*a*c;
+    if (D<0)
+       return {0, 0, 0}; // show error
+    else {
+        x1 = (-1*b + std::sqrt(D))/2*a;
+        x2 = (-1*b - std::sqrt(D))/2*a;
+        return {x1, x2, 1};
+    }
+
+}
