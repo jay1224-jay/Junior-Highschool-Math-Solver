@@ -99,16 +99,16 @@ simultaneous_equations( EQUATION equation1, EQUATION equation2 )
     */
 
     y_fraction_son = 
-    ((equation1.c * a_lcm)/equation1.a - (equation2.c * a_lcm)/equation2.a);
+    (equation1.c * (a_lcm/equation1.a) - equation2.c * (a_lcm/equation2.a);
 
     y_fraction_mother = 
-    ((equation1.b * a_lcm)/equation1.a - (equation2.b * a_lcm)/equation2.a);
+    (equation1.b * (a_lcm/equation1.a) - equation2.b * (a_lcm/equation2.a);
 
     x_fraction_son = 
-    ((equation1.c * b_lcm)/equation1.b - (equation2.c * b_lcm)/equation2.b);
+    (equation1.c * (b_lcm/equation1.b) - equation2.c * (b_lcm/equation2.b);
 
     x_fraction_mother = 
-    ((equation1.a * b_lcm)/equation1.b - (equation2.a * b_lcm)/equation2.b);
+    (equation1.a * (b_lcm/equation1.b) - equation2.a * (b_lcm/equation2.b);
 
     //std::cout << y_fraction_son << " " << y_fraction_mother << " " << x_fraction_son << " " << x_fraction_mother;
 
