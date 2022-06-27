@@ -4,10 +4,10 @@
 main: ui.o math.o main.o
 	g++ ui.o math.o main.o -o main `fltk-config --ldflags`
 
-ui.o: ui.cpp
+ui.o: ui.cpp variable.h
 	g++ `fltk-config --cxxflags` -c ui.cpp -Wall
 
-main.o: main.cpp
+main.o: main.cpp variable.h
 	g++ `fltk-config --cxxflags` -c main.cpp -Wall
 
 math.o: math.cpp

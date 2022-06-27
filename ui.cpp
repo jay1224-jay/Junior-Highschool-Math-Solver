@@ -32,6 +32,8 @@ Fl_Group* twopow_group;
 
 
 Fl_Input* gcd_number_input;
+Fl_Box* gcd_output_text; 
+
 
 
 void hide_all(void) {
@@ -117,7 +119,7 @@ void make_ui(void) {
     gcd_calc_btn->callback(gcd_calc, 0);
 
 
-    Fl_Box* gcd_output_text = new Fl_Box(350, 300, 50, 30, "gcd: ");
+    gcd_output_text = new Fl_Box(350, 300, 80, 30, "gcd: ");
 
 
     gcd_group->end();
