@@ -1,0 +1,15 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cxx}
+Function {} {open
+} {
+  Fl_Window {} {open selected
+    xywh {667 297 500 100} type Double color 45 visible
+  } {
+    Fl_Input {} {
+      label {input:}
+      xywh {140 30 165 20}
+    }
+  }
+}
