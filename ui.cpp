@@ -114,9 +114,11 @@ void make_ui(void) {
     
     gcd_number_input = new Fl_Input(300, 100, 270, 30, "numbers");
 
-    Fl_Button* gcd_calc_btn = new Fl_Button(350, 200, 50, 30, "calc");
+    Fl_Button* gcd_calc_btn = new Fl_Button(300, 200, 50, 30, "calc");
+    Fl_Button* gcd_clean_btn = new Fl_Button(380, 200, 50, 30, "clean");
 
     gcd_calc_btn->callback(gcd_calc, 0);
+    gcd_clean_btn->callback(gcd_clean, 0);
 
 
     gcd_output_text = new Fl_Box(350, 300, 80, 30, "gcd: ");
