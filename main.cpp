@@ -32,76 +32,95 @@ void gcd_calc(Fl_Widget*, void*) {
 
     std::string str(gcd_number_input->value());
 
-    std::string token, delimiter = " ";
+    if ( str.size() != 0 ) { 
 
-    size_t pos = 0;
+        std::string token, delimiter = " ";
 
-    while ((pos = str.find(delimiter)) != std::string::npos) {
-        token = str.substr(0, pos);
+        size_t pos = 0;
+
+        while ((pos = str.find(delimiter)) != std::string::npos) {
+            token = str.substr(0, pos);
+            try {
+                numbers.push_back(stoi(token));
+            } 
+            catch ( const std::exception& e ) {
+                std::cout << "an error\n";
+                std::cout << e.what() << std::endl;
+
+                if (token != "") {
+
+                    char msg[100];
+
+                    char* token_charp = const_cast<char*>(token.c_str());
+
+
+                    sprintf(msg,"invaild input: \"%s\"", token_charp); 
+
+
+                    fl_message(msg);
+                }
+            }
+
+            str.erase(0, pos + delimiter.length());
+        }
         try {
-            numbers.push_back(stoi(token));
+            numbers.push_back(stoi(str));
         } 
         catch ( const std::exception& e ) {
             std::cout << "an error\n";
             std::cout << e.what() << std::endl;
 
-            char msg[100];
 
-            char* token_charp = const_cast<char*>(token.c_str());
+            if (token != "") {
+
+                char msg[100];
 
 
-            sprintf(msg, "invaild input: \"%s\"\nmake sure you type numbers with only one space \" \"", token_charp);
+                char* str_charp = const_cast<char*>(str.c_str());
 
-            fl_message(msg);
+
+                sprintf(msg, "invaild input: \"%s\"", str_charp);
+
+                fl_message(msg);
+
+            }
         }
 
-        str.erase(0, pos + delimiter.length());
+
+        int gcd = GCD(numbers, numbers.size());
+
+
+        char buf[20];
+
+        sprintf(buf, "gcd: %d", gcd);
+
+
+        const char * p = buf;
+
+        std::cout << *p << std::endl;
+
+        /*
+        std::string gcd_str = std::to_string(gcd);
+
+        int len = gcd_str.size();
+
+        char* label = new char[ len + 1];
+
+        std::copy(gcd_str.begin(), gcd_str.end(), label);
+
+        label[len] = '\0';
+        */
+
+        gcd_output_text->label(p);
+
+        //delete[] label;
+
+        //std::string numbers = gcd_number_input->value();
+
+        //gcd_output_text->label(str);
     }
-    try {
-        numbers.push_back(stoi(str));
-    } 
-    catch ( const std::exception& e ) {
-        std::cout << "an error\n";
-        std::cout << e.what() << std::endl;
-
-        char msg[100];
-
-        char* str_charp = const_cast<char*>(str.c_str());
 
 
-        sprintf(msg, "invaild input: \"%s\"\nmake sure you type numbers with only one space \" \"", str_charp);
-
-        fl_message(msg);
-    }
-
-
-    int gcd = GCD(numbers, numbers.size());
-
-
-    char buf[20];
-
-    sprintf(buf, "gcd: %d", gcd);
-
-
-    /*
-    std::string gcd_str = std::to_string(gcd);
-
-    int len = gcd_str.size();
-
-    char* label = new char[ len + 1];
-
-    std::copy(gcd_str.begin(), gcd_str.end(), label);
-
-    label[len] = '\0';
-    */
-
-    gcd_output_text->label(buf);
-
-    //delete[] label;
-
-    //std::string numbers = gcd_number_input->value();
-
-    //gcd_output_text->label(str);
 }
 
 void gcd_clean(Fl_Widget*, void*) {
@@ -113,11 +132,107 @@ void gcd_clean(Fl_Widget*, void*) {
 
 
 void lcm_calc(Fl_Widget* , void*) {
-    std::cout << "lcm calc\n";
+
+    std::vector<int> numbers;
+
+    std::string str(lcm_number_input->value());
+
+    if ( str.size() != 0 ) { 
+
+        std::string token, delimiter = " ";
+
+        size_t pos = 0;
+
+        while ((pos = str.find(delimiter)) != std::string::npos) {
+            token = str.substr(0, pos);
+            try {
+                numbers.push_back(stoi(token));
+            } 
+            catch ( const std::exception& e ) {
+                std::cout << "an error\n";
+                std::cout << e.what() << std::endl;
+                
+                if (token != "") {
+
+                    char msg[100];
+
+                    char* token_charp = const_cast<char*>(token.c_str());
+
+                    sprintf(msg, "invaild input: \"%s\"", token_charp);
+
+                    fl_message(msg);
+                }
+            }
+
+            str.erase(0, pos + delimiter.length());
+        }
+        try {
+            numbers.push_back(stoi(str));
+        } 
+        catch ( const std::exception& e ) {
+            std::cout << "an error\n";
+            std::cout << e.what() << std::endl;
+            
+            if (str != "") {
+    
+                char msg[100];
+                
+                char* str_charp = const_cast<char*>(str.c_str());
+
+
+                sprintf(msg, "invaild input: \"%s\"", str_charp);
+
+                fl_message(msg);
+            }
+
+        }
+
+
+        int gcd = GCD(numbers, numbers.size()), 
+            lcm, 
+            product=1;
+
+        // note: lcm = (a x b x c) / gcd(a, b, c);
+        //
+
+        for ( int n : numbers )
+            product *= n;
+
+        lcm = product / gcd;
+
+
+        char buf[20];
+
+        sprintf(buf, "lcm: %d", lcm);
+
+        std::cout << buf << std::endl;
+
+
+        /*
+        std::string gcd_str = std::to_string(gcd);
+
+        int len = gcd_str.size();
+
+        char* label = new char[ len + 1];
+
+        std::copy(gcd_str.begin(), gcd_str.end(), label);
+
+        label[len] = '\0';
+        */
+
+        lcm_output_text->label(buf);
+
+        //delete[] label;
+
+        //std::string numbers = gcd_number_input->value();
+
+        //gcd_output_text->label(str);
+    }
 }
 
 void lcm_clean(Fl_Widget* , void*) {
-    std::cout << "lcm clean\n";
+    lcm_number_input->value(0);
+    lcm_output_text->label("lcm: ");
 }
     
 

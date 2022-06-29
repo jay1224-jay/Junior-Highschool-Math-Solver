@@ -6,4 +6,7 @@ extern void gcd_calc(Fl_Widget*, void*);
 extern Fl_Input* gcd_number_input;
 extern Fl_Box* gcd_output_text;
 extern void gcd_clean(Fl_Widget*, void*);
+
+extern Fl_Input* lcm_number_input;
+extern Fl_Box* lcm_output_text;
 //#endif

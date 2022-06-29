@@ -7,9 +7,11 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Input.H>
+#include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Box.H>
+#include <FL/Fl_PNG_Image.H>
 
 #include "variable.h"
 
@@ -41,6 +43,12 @@ Fl_Box* gcd_output_text;
 
 Fl_Input* lcm_number_input;
 Fl_Box* lcm_output_text; 
+
+
+
+Fl_Int_Input* sin_degree; 
+Fl_Int_Input* cos_degree; 
+Fl_Int_Input* tan_degree; 
 
 
 
@@ -164,6 +172,34 @@ void make_ui(void) {
 
 
     sincos_group = new Fl_Group(100, 70, 600, 500);
+
+
+
+    
+    sin_degree =  new Fl_Int_Input( 200, 100, 60, 30, "sin " );
+
+    sin_degree->labelsize(20);
+    sin_degree->textsize(20);
+
+    Fl_Box* degree_symbol = new Fl_Box(270, 107, 10, 10, "°");
+    degree_symbol->labelsize(25);
+
+    Fl_PNG_Image* arrow_png = new Fl_PNG_Image("images/arrow-50.png");
+
+    //arrow_png->draw(290, 100, 20, 10);
+    //arrow_png->max_size(10);
+
+    Fl_Box* arrow = new Fl_Box(290, 100, 20, 10);
+    arrow->image(arrow_png);
+
+
+
+    //cos_degree =  new Fl_Input( 200, 100, 50, 30, "cos " );
+    //tan_degree =  new Fl_Input( 200, 100, 50, 30, "tan " );
+
+
+
+
 
     sincos_group->end();
     sincos_group->hide();

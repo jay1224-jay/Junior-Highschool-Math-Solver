@@ -4,12 +4,12 @@ header_name {.h}
 code_name {.cxx}
 Function {} {open
 } {
-  Fl_Window {} {open selected
-    xywh {667 297 500 100} type Double color 45 visible
+  Fl_Window {} {open
+    xywh {869 195 1050 835} type Double color 45 visible
   } {
-    Fl_Input {} {
-      label {input:}
-      xywh {140 30 165 20}
+    Fl_Box {} {
+      label label selected
+      image {../images/arrow.png} deimage {../images/arrow.png} xywh {320 212 315 303} labelsize 12 labelcolor 55
     }
   }
 }
