@@ -21,6 +21,11 @@ using namespace std;
 // global var
 //
 
+
+void lcm_calc(Fl_Widget* , void*);
+
+void lcm_clean(Fl_Widget* , void*);
+
 Fl_Window* w;
 
 Fl_Group* lcm_group;
@@ -33,6 +38,9 @@ Fl_Group* twopow_group;
 
 Fl_Input* gcd_number_input;
 Fl_Box* gcd_output_text; 
+
+Fl_Input* lcm_number_input;
+Fl_Box* lcm_output_text; 
 
 
 
@@ -134,7 +142,18 @@ void make_ui(void) {
 
     
     lcm_group = new Fl_Group(100, 70, 600, 500);
-    
+
+
+    lcm_number_input = new Fl_Input(300, 100, 270, 30, "numbers");
+
+    Fl_Button* lcm_calc_btn = new Fl_Button(300, 200, 50, 30, "calc");
+    Fl_Button* lcm_clean_btn = new Fl_Button(380, 200, 50, 30, "clean");
+
+    lcm_calc_btn->callback(lcm_calc, 0);
+    lcm_clean_btn->callback(lcm_clean, 0);
+
+
+    lcm_output_text = new Fl_Box(350, 300, 80, 30, "lcm: ");
 
     lcm_group->end();
 

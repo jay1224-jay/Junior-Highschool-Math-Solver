@@ -110,6 +110,15 @@ void gcd_clean(Fl_Widget*, void*) {
     gcd_output_text->label("gcd: ");
 
 }
+
+
+void lcm_calc(Fl_Widget* , void*) {
+    std::cout << "lcm calc\n";
+}
+
+void lcm_clean(Fl_Widget* , void*) {
+    std::cout << "lcm clean\n";
+}
     
 
 
