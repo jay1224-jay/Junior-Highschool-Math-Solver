@@ -7,13 +7,17 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Input.H>
+#include <FL/Fl_Output.H>
 #include <FL/Fl_Int_Input.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Box.H>
-#include <FL/Fl_PNG_Image.H>
+//#include <FL/Fl_PNG_Image.H>
 
 #include "variable.h"
+
+
+#define margin 80   // for sincos_group
 
 
 
@@ -28,6 +32,11 @@ void lcm_calc(Fl_Widget* , void*);
 
 void lcm_clean(Fl_Widget* , void*);
 
+
+void sincos_calc(Fl_Widget*, void*) ;
+void sincos_clean(Fl_Widget*, void*) ;
+
+
 Fl_Window* w;
 
 Fl_Group* lcm_group;
@@ -39,18 +48,20 @@ Fl_Group* twopow_group;
 
 
 Fl_Input* gcd_number_input;
-Fl_Box* gcd_output_text; 
+Fl_Box* gcd_output_text;
 
 Fl_Input* lcm_number_input;
-Fl_Box* lcm_output_text; 
+Fl_Box* lcm_output_text;
 
 
 
-Fl_Int_Input* sin_degree; 
-Fl_Int_Input* cos_degree; 
-Fl_Int_Input* tan_degree; 
+Fl_Int_Input* sin_degree;
+Fl_Int_Input* cos_degree;
+Fl_Int_Input* tan_degree;
 
-
+Fl_Output* sin_output;
+Fl_Output* cos_output;
+Fl_Output* tan_output;
 
 void hide_all(void) {
 
@@ -65,13 +76,13 @@ void hide_all(void) {
 
 void gcd_cb(Fl_Widget* w, void*) {
     hide_all();
-    gcd_group->show(); 
+    gcd_group->show();
 }
 
 
 void lcm_cb(Fl_Widget* w, void*) {
     hide_all();
-    lcm_group->show(); 
+    lcm_group->show();
 }
 
 
@@ -103,7 +114,7 @@ void make_ui(void) {
     w = new Fl_Window(800, 500);
     w->color((Fl_Color)45);
     Fl_Menu_Bar* bar = new Fl_Menu_Bar(160, 0, 1365, 25);
-	    
+
     bar->add("gcd", 0, gcd_cb);
     bar->add("lcm", 0, lcm_cb);
 
@@ -120,14 +131,14 @@ void make_ui(void) {
     menu_alg->add("2powEq", 0, twopow_cb);
 
 
-    
+
 
 
 
     gcd_group = new Fl_Group(100, 70, 600, 500);
-    
 
-    
+
+
     gcd_number_input = new Fl_Input(300, 100, 270, 30, "numbers");
 
     Fl_Button* gcd_calc_btn = new Fl_Button(300, 200, 50, 30, "calc");
@@ -137,7 +148,7 @@ void make_ui(void) {
     gcd_clean_btn->callback(gcd_clean, 0);
 
 
-    gcd_output_text = new Fl_Box(350, 300, 80, 30, "gcd: ");
+    gcd_output_text = new Fl_Box(350, 300, 150, 30, "gcd: ");
 
 
     gcd_group->end();
@@ -148,7 +159,9 @@ void make_ui(void) {
 
 
 
-    
+
+
+
     lcm_group = new Fl_Group(100, 70, 600, 500);
 
 
@@ -161,7 +174,7 @@ void make_ui(void) {
     lcm_clean_btn->callback(lcm_clean, 0);
 
 
-    lcm_output_text = new Fl_Box(350, 300, 80, 30, "lcm: ");
+    lcm_output_text = new Fl_Box(350, 300, 150, 30, "lcm: ");
 
     lcm_group->end();
 
@@ -175,30 +188,68 @@ void make_ui(void) {
 
 
 
-    
+
     sin_degree =  new Fl_Int_Input( 200, 100, 60, 30, "sin " );
 
     sin_degree->labelsize(20);
     sin_degree->textsize(20);
 
-    Fl_Box* degree_symbol = new Fl_Box(270, 107, 10, 10, "°");
-    degree_symbol->labelsize(25);
-
-    Fl_PNG_Image* arrow_png = new Fl_PNG_Image("images/arrow-50.png");
-
-    //arrow_png->draw(290, 100, 20, 10);
-    //arrow_png->max_size(10);
-
-    Fl_Box* arrow = new Fl_Box(290, 100, 20, 10);
-    arrow->image(arrow_png);
+    Fl_Box* sin_degree_symbol = new Fl_Box(270, 107, 10, 10, "°");
+    sin_degree_symbol->labelsize(25);
 
 
+    Fl_Box* sin_arrow = new Fl_Box(320, 110, 20, 10, "->");
+    sin_arrow->labelsize(30);
 
-    //cos_degree =  new Fl_Input( 200, 100, 50, 30, "cos " );
-    //tan_degree =  new Fl_Input( 200, 100, 50, 30, "tan " );
+    sin_output = new Fl_Output(420, 100, 200, 30);
+    sin_output->textsize(20);
 
 
 
+
+
+    cos_degree =  new Fl_Int_Input( 200, 100+margin, 60, 30, "cos " );
+
+    cos_degree->labelsize(20);
+    cos_degree->textsize(20);
+
+    Fl_Box* cos_degree_symbol = new Fl_Box(270, 107+margin, 10, 10, "°");
+    cos_degree_symbol->labelsize(25);
+
+
+    Fl_Box* cos_arrow = new Fl_Box(320, 110+margin, 20, 10, "->");
+    cos_arrow->labelsize(30);
+
+    cos_output = new Fl_Output(420, 100+margin, 200, 30);
+    cos_output->textsize(20);
+
+
+
+
+
+    tan_degree =  new Fl_Int_Input( 200, 100+margin+margin, 60, 30, "tan " );
+
+    tan_degree->labelsize(20);
+    tan_degree->textsize(20);
+
+    Fl_Box* tan_degree_symbol = new Fl_Box(270, 107+margin+margin, 10, 10, "°");
+    tan_degree_symbol->labelsize(25);
+
+
+    Fl_Box* tan_arrow = new Fl_Box(320, 110+margin+margin, 20, 10, "->");
+    tan_arrow->labelsize(30);
+
+    tan_output = new Fl_Output(420, 100+margin+margin, 200, 30);
+    tan_output->textsize(20);
+
+
+
+    Fl_Button* sincos_calc_btn = new Fl_Button(270, 110+margin+margin+margin, 50, 30, "calc");
+    sincos_calc_btn->callback(sincos_calc);
+
+
+    Fl_Button* sincos_clean_btn = new Fl_Button(400, 110+margin+margin+margin, 50, 30, "clean");
+    sincos_clean_btn->callback(sincos_clean);
 
 
     sincos_group->end();
@@ -209,7 +260,7 @@ void make_ui(void) {
 
 
     heron_group = new Fl_Group(100, 70, 600, 500);
-    
+
     heron_group->end();
     heron_group->hide();
 
@@ -218,7 +269,7 @@ void make_ui(void) {
 
 
     se_group = new Fl_Group(100, 70, 600, 500);
-    
+
 
     se_group->end();
     se_group->hide();
@@ -226,9 +277,9 @@ void make_ui(void) {
 
 
 
-    
+
     twopow_group = new Fl_Group(100, 70, 600, 500);
-    
+
 
     twopow_group->end();
     twopow_group->hide();
@@ -238,5 +289,5 @@ void make_ui(void) {
 
 
     w->end();
-    
+
 }

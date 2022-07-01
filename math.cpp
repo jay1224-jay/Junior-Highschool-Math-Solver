@@ -8,21 +8,21 @@ using namespace std;
 
 
 /*
- * 54 32  
+ * 54 32
  *   2   45
  *     1
  *
- *     
+ *
  */
 
 
 
 int GCD(vector<int> nums, int length) {
-    
+
     /*
     char c;
     cin >> c;
-    for ( int i : nums ) 
+    for ( int i : nums )
         cout << i << " ";
     cout << length;
     cout << endl;
@@ -42,7 +42,7 @@ int GCD(vector<int> nums, int length) {
 
     vector<int> temp = {n1, n2};
 
-    
+
 
     nums.push_back( GCD(temp, 2) );
 
@@ -50,5 +50,5 @@ int GCD(vector<int> nums, int length) {
 
 
     return GCD(nums, length-1);
-    
+
 }
