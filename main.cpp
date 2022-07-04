@@ -20,6 +20,7 @@
 #include <FL/Fl_Box.H>
 #include <FL/fl_ask.H>
 #include <FL/Fl_Int_Input.H>
+#include <FL/Fl_Float_Input.H>
 
 #include "variable.h"
 
@@ -27,6 +28,10 @@
 
 
 int GCD(std::vector<int> nums, int length=2);
+
+float heron_area_calc(float a, float b, float c);
+
+std::vector<std::string> se_ans( float a1, float a2, float b1, float b2, float c1, float c2 );
 
 
 void gcd_calc(Fl_Widget*, void*) {
@@ -93,7 +98,7 @@ void gcd_calc(Fl_Widget*, void*) {
 
                 sprintf(msg, "invaild input: \"%s\"", str_charp);
 
-                fl_message(msg, 0);
+                fl_message(msg);
 
 
             }
@@ -108,7 +113,7 @@ void gcd_calc(Fl_Widget*, void*) {
             sprintf(buf, "gcd: %d", gcd);
             gcd_output_text->label(buf);
         } else
-            fl_message("too few number", 0);
+            fl_message("too few number");
 
 
         /*
@@ -173,7 +178,7 @@ void lcm_calc(Fl_Widget* , void*) {
 
                     sprintf(msg, "invaild input: \"%s\"", token_charp);
 
-                    fl_message(msg, 0);
+                    fl_message(msg);
                 }
             }
 
@@ -195,7 +200,7 @@ void lcm_calc(Fl_Widget* , void*) {
 
                 sprintf(msg, "invaild input: \"%s\"", str_charp);
 
-                fl_message(msg, 0);
+                fl_message(msg);
             }
 
         }
@@ -243,7 +248,7 @@ void lcm_calc(Fl_Widget* , void*) {
 
             //gcd_output_text->label(str);
         } else
-            fl_message("too few number", 0);
+            fl_message("too few number");
     }
 }
 
@@ -280,23 +285,81 @@ void sincos_calc(Fl_Widget*, void*) {
 }
 
 void sincos_clean(Fl_Widget*, void*) {
-
-
     
     sin_degree->value(0);
     cos_degree->value(0);
     tan_degree->value(0);
 
+}
+
+void heron_calc(Fl_Widget*, void*) {
+
+    float ans;
+
+    ans = heron_area_calc( 
+            atof(heron_a->value()), 
+            atof(heron_b->value()), 
+            atof(heron_c->value())
+            );
+
+    char text[20];
+
+    sprintf(text, "%f", ans);
+
+    heron_output->value(text);
+    
+}
+
+void heron_clean(Fl_Widget*, void*) {
+
+    heron_a->value(0); 
+    heron_b->value(0); 
+    heron_c->value(0); 
 
 }
 
+void se_calc(Fl_Widget*, void*) {
 
+
+    std::vector<std::string> ans;
+
+    ans = se_ans(
+        atof(se_a1->value()),
+        atof(se_a2->value()),
+        atof(se_b1->value()),
+        atof(se_b2->value()),
+        atof(se_c1->value()),
+        atof(se_c2->value())
+    );
+
+
+
+    char* x_text = const_cast<char*>(ans[0].c_str());
+    char* y_text = const_cast<char*>(ans[1].c_str());
+    
+    se_x_output->value(x_text);
+    se_y_output->value(y_text);
+
+
+}
+
+void se_clean(Fl_Widget*, void*) {
+
+    se_a1->value(0);
+    se_a2->value(0);
+    se_b1->value(0);    
+    se_b2->value(0);
+    se_c1->value(0);
+    se_c2->value(0);
+
+}
 
 void make_ui(void);
 
 
 
 int main( int argc, char** argv) {
+    
 
     make_ui();
 

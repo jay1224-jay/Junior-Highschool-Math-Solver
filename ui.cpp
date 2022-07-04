@@ -9,6 +9,7 @@
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Output.H>
 #include <FL/Fl_Int_Input.H>
+#include <FL/Fl_Float_Input.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Box.H>
@@ -36,6 +37,12 @@ void lcm_clean(Fl_Widget* , void*);
 void sincos_calc(Fl_Widget*, void*) ;
 void sincos_clean(Fl_Widget*, void*) ;
 
+void heron_calc(Fl_Widget*, void*) ;
+void heron_clean(Fl_Widget*, void*) ;
+
+void se_calc(Fl_Widget*, void*) ;
+void se_clean(Fl_Widget*, void*) ;
+
 
 Fl_Window* w;
 
@@ -55,13 +62,33 @@ Fl_Box* lcm_output_text;
 
 
 
-Fl_Int_Input* sin_degree;
-Fl_Int_Input* cos_degree;
-Fl_Int_Input* tan_degree;
+Fl_Float_Input* sin_degree;
+Fl_Float_Input* cos_degree;
+Fl_Float_Input* tan_degree;
 
 Fl_Output* sin_output;
 Fl_Output* cos_output;
 Fl_Output* tan_output;
+
+Fl_Float_Input* heron_a;
+Fl_Float_Input* heron_b;
+Fl_Float_Input* heron_c;
+
+Fl_Output* heron_output;
+
+
+Fl_Float_Input* se_a1;
+Fl_Float_Input* se_a2;
+Fl_Float_Input* se_b1;
+Fl_Float_Input* se_b2;
+Fl_Float_Input* se_c1;
+Fl_Float_Input* se_c2;
+
+Fl_Output* se_x_output;
+Fl_Output* se_y_output;
+
+
+
 
 void hide_all(void) {
 
@@ -189,7 +216,7 @@ void make_ui(void) {
 
 
 
-    sin_degree =  new Fl_Int_Input( 200, 100, 60, 30, "sin " );
+    sin_degree =  new Fl_Float_Input( 200, 100, 60, 30, "sin " );
 
     sin_degree->labelsize(20);
     sin_degree->textsize(20);
@@ -208,7 +235,7 @@ void make_ui(void) {
 
 
 
-    cos_degree =  new Fl_Int_Input( 200, 100+margin, 60, 30, "cos " );
+    cos_degree =  new Fl_Float_Input( 200, 100+margin, 60, 30, "cos " );
 
     cos_degree->labelsize(20);
     cos_degree->textsize(20);
@@ -227,7 +254,7 @@ void make_ui(void) {
 
 
 
-    tan_degree =  new Fl_Int_Input( 200, 100+margin+margin, 60, 30, "tan " );
+    tan_degree =  new Fl_Float_Input( 200, 100+margin+margin, 60, 30, "tan " );
 
     tan_degree->labelsize(20);
     tan_degree->textsize(20);
@@ -261,6 +288,27 @@ void make_ui(void) {
 
     heron_group = new Fl_Group(100, 70, 600, 500);
 
+
+
+    new Fl_Box(340, 100, 100, 50, "The Heron's rule");
+    new Fl_Box(320, 140, 100, 50, "Enter 3 sides of your triangle to calculate the area of it");
+
+
+    // three side: a, b, c: int
+    heron_a = new Fl_Float_Input(250, 200, 70, 30, "3 sides: ");
+    heron_b = new Fl_Float_Input(350, 200, 70, 30);
+    heron_c = new Fl_Float_Input(450, 200, 70, 30);
+
+
+    Fl_Button* heron_calc_btn = new Fl_Button(320, 270, 50, 30, "calc");
+    heron_calc_btn->callback(heron_calc);
+
+    Fl_Button* heron_clean_btn = new Fl_Button(400, 270, 50, 30, "clean");
+    heron_clean_btn->callback(heron_clean);
+
+    heron_output = new Fl_Output(350, 350, 90, 30, "Area: ");
+
+
     heron_group->end();
     heron_group->hide();
 
@@ -270,6 +318,62 @@ void make_ui(void) {
 
     se_group = new Fl_Group(100, 70, 600, 500);
 
+
+
+    /*
+     * a1x+b1y=c1
+     * a2x+b2y=c2
+     * 
+     * */
+
+
+    se_a1 = new Fl_Float_Input(250, 100, 60, 35);
+    se_a1->textsize(20);
+
+    Fl_Box* label_11 = new Fl_Box(290, 100, 90, 30, "x + ");
+    label_11->labelsize(20);
+    
+    se_b1 = new Fl_Float_Input(350, 100, 60, 35);
+    se_b1->textsize(20);
+
+    Fl_Box* label_12 = new Fl_Box(390, 100, 90, 30, "y = ");
+    label_12->labelsize(20);
+
+    se_c1 = new Fl_Float_Input(450, 100, 60, 35);
+    se_c1->textsize(20);
+
+
+    se_a2 = new Fl_Float_Input(250, 100+70, 60, 35);
+    se_a2->textsize(20);
+
+    Fl_Box* label_21 = new Fl_Box(290, 100+70, 90, 30, "x + ");
+    label_21->labelsize(20);
+    
+    se_b2 = new Fl_Float_Input(350, 100+70, 60, 35);
+    se_b2->textsize(20);
+
+    Fl_Box* label_22 = new Fl_Box(390, 100+70, 90, 30, "y = ");
+    label_22->labelsize(20);
+
+    se_c2 = new Fl_Float_Input(450, 100+70, 60, 35);
+    se_c2->textsize(20);
+
+
+    
+    Fl_Button* se_calc_btn = new Fl_Button(310, 260, 50, 30, "calc");
+    se_calc_btn->callback(se_calc);
+
+    Fl_Button* se_clean_btn = new Fl_Button(390, 260, 50, 30, "clean");
+    se_clean_btn->callback(se_clean);
+
+    
+    se_x_output = new Fl_Output(290, 320, 80, 50, "x = ");
+    se_x_output->textsize(20);
+    se_x_output->labelsize(20);
+
+    se_y_output = new Fl_Output(450, 320, 80, 50, "y = ");
+    se_y_output->textsize(20);
+    se_y_output->labelsize(20);
 
     se_group->end();
     se_group->hide();
