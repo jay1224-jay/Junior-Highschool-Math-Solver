@@ -26,8 +26,9 @@
 
 #define PI 3.14159265359
 
+typedef unsigned long long ul;
 
-int GCD(std::vector<int> nums, int length=2);
+ul GCD(std::vector<ul> nums, int length=2);
 
 float heron_area_calc(float a, float b, float c);
 
@@ -38,7 +39,7 @@ void gcd_calc(Fl_Widget*, void*) {
 
 
 
-    std::vector<int> numbers;
+    std::vector<ul> numbers;
 
     std::string str(gcd_number_input->value());
 
@@ -51,7 +52,7 @@ void gcd_calc(Fl_Widget*, void*) {
         while ((pos = str.find(delimiter)) != std::string::npos) {
             token = str.substr(0, pos);
             try {
-                numbers.push_back(stoi(token));
+                numbers.push_back(stol(token));
             }
             catch ( const std::exception& e ) {
                 std::cout << "an error\n";
@@ -78,7 +79,7 @@ void gcd_calc(Fl_Widget*, void*) {
             str.erase(0, pos + delimiter.length());
         }
         try {
-            numbers.push_back(stoi(str));
+            numbers.push_back(stoll(str)); // why use stoll (long long), because we have to handle what user type
         }
         catch ( const std::exception& e ) {
             std::cout << "an error\n";
@@ -105,12 +106,12 @@ void gcd_calc(Fl_Widget*, void*) {
         }
         if ( numbers.size() > 1 ) {
 
-            int gcd = GCD(numbers, numbers.size());
+            ul gcd = GCD(numbers, numbers.size());
 
 
             char buf[20];
 
-            sprintf(buf, "gcd: %d", gcd);
+            sprintf(buf, "gcd: %llu", gcd);
             gcd_output_text->label(buf);
         } else
             fl_message("too few number");
@@ -149,7 +150,7 @@ void gcd_clean(Fl_Widget*, void*) {
 
 void lcm_calc(Fl_Widget* , void*) {
 
-    std::vector<int> numbers;
+    std::vector<ul> numbers;
 
     std::string str(lcm_number_input->value());
 
@@ -162,7 +163,7 @@ void lcm_calc(Fl_Widget* , void*) {
         while ((pos = str.find(delimiter)) != std::string::npos) {
             token = str.substr(0, pos);
             try {
-                numbers.push_back(stoi(token));
+                numbers.push_back(stoll(token));
             }
             catch ( const std::exception& e ) {
                 std::cout << "an error\n";
@@ -208,14 +209,14 @@ void lcm_calc(Fl_Widget* , void*) {
 
         if ( numbers.size() > 1 ) {
 
-            int gcd = GCD(numbers, numbers.size()),
+            ul gcd = GCD(numbers, numbers.size()),
                 lcm,
                 product=1;
 
             // note: lcm = (a x b x c) / gcd(a, b, c);
             //
 
-            for ( int n : numbers )
+            for ( long n : numbers )
                 product *= n;
 
             lcm = product / gcd;
@@ -223,7 +224,7 @@ void lcm_calc(Fl_Widget* , void*) {
 
             char buf[20];
 
-            sprintf(buf, "lcm: %d", lcm);
+            sprintf(buf, "lcm: %llu", lcm);
 
             std::cout << buf << std::endl;
 

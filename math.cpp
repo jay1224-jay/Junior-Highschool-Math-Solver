@@ -7,6 +7,8 @@ using namespace std;
 #define MIN(a, b) ((a < b) ? (a) : (b))
 #define MAX(a, b) ((a < b) ? (b) : (a))
 
+typedef unsigned long long ul;
+
 struct EQUATION {
     float a;
     float b;
@@ -31,11 +33,25 @@ struct EQUATION {
  *
  */
 
+
 vector<string> simultaneous_equations( EQUATION equation1, EQUATION equation2 );
 
 
+int my_abs(int n){
+    if (n<0)
+        return -1 * n;
+    return n;
+}
 
-int GCD(vector<int> nums, int length) {
+double my_abs(double n){
+    if (n<0)
+        return -1 * n;
+    return n;
+}
+
+
+
+ul GCD(vector<ul> nums, int length) {
 
 
     /*
@@ -51,15 +67,15 @@ int GCD(vector<int> nums, int length) {
         int min = MIN(nums[0], nums[1]), max = MAX(nums[0], nums[1]);
         if ( (max % min) == 0)
             return min;
-        vector<int> need = {max % min, min};
+        vector<ul> need = {max % min, min};
         return GCD(need, 2);
     }
 
 
 
-    int n1 = *nums.begin(), n2 = *( nums.begin() + 1);
+    ul n1 = *nums.begin(), n2 = *( nums.begin() + 1);
 
-    vector<int> temp = {n1, n2};
+    vector<ul> temp = {n1, n2};
 
 
 
@@ -155,8 +171,8 @@ vector<string> simultaneous_equations( EQUATION equation1, EQUATION equation2 )
     std::string x, y;
 
 
-    int a_lcm = abs(equation1.a*equation2.a) / GCD({abs(equation1.a), abs(equation2.a)}, 2);
-    int b_lcm = abs(equation1.b*equation2.b) / GCD({abs(equation1.b), abs(equation2.b)}, 2);
+    int a_lcm = my_abs(equation1.a*equation2.a) / GCD({my_abs(equation1.a), my_abs(equation2.a)}, 2);
+    int b_lcm = my_abs(equation1.b*equation2.b) / GCD({my_abs(equation1.b), my_abs(equation2.b)}, 2);
 
     int x_fraction_son, x_fraction_mother, 
         y_fraction_son, y_fraction_mother;
@@ -180,8 +196,8 @@ vector<string> simultaneous_equations( EQUATION equation1, EQUATION equation2 )
         if ( (x_fraction_mother <= 0 && x_fraction_son <= 0) || (x_fraction_mother >= 0 && x_fraction_son >= 0)) {
             
 
-            x_fraction_son = abs(x_fraction_son);
-            x_fraction_mother = abs(x_fraction_mother);
+            x_fraction_son = my_abs(x_fraction_son);
+            x_fraction_mother = my_abs(x_fraction_mother);
             int gcd = GCD({x_fraction_mother, x_fraction_son}, 2);
 
             if (x_fraction_mother/gcd == 1.0){
@@ -194,8 +210,8 @@ vector<string> simultaneous_equations( EQUATION equation1, EQUATION equation2 )
             }
             
         } else {
-            x_fraction_son = abs(x_fraction_son);
-            x_fraction_mother = abs(x_fraction_mother);
+            x_fraction_son = my_abs(x_fraction_son);
+            x_fraction_mother = my_abs(x_fraction_mother);
             int gcd = GCD({x_fraction_mother, x_fraction_son}, 2);
 
             if (x_fraction_mother/gcd == 1.0){
@@ -215,8 +231,8 @@ vector<string> simultaneous_equations( EQUATION equation1, EQUATION equation2 )
     if ( y_fraction_son != 0 ) {
         if ( (y_fraction_mother < 0 && y_fraction_son < 0) || (y_fraction_mother > 0 && y_fraction_son > 0)) {
 
-            y_fraction_son = abs(y_fraction_son);
-            y_fraction_mother = abs(y_fraction_mother);
+            y_fraction_son = my_abs(y_fraction_son);
+            y_fraction_mother = my_abs(y_fraction_mother);
             int gcd = GCD({y_fraction_mother, y_fraction_son}, 2);
 
             if (y_fraction_mother/gcd == 1.0){
@@ -229,8 +245,8 @@ vector<string> simultaneous_equations( EQUATION equation1, EQUATION equation2 )
             }
             
         } else {
-            y_fraction_son = abs(y_fraction_son);
-            y_fraction_mother = abs(y_fraction_mother);
+            y_fraction_son = my_abs(y_fraction_son);
+            y_fraction_mother = my_abs(y_fraction_mother);
             int gcd = GCD({x_fraction_mother, x_fraction_son}, 2);
 
             if (y_fraction_mother/gcd == 1.0){

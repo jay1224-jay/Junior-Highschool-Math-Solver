@@ -13,6 +13,7 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Box.H>
+#include <FL/fl_ask.H>
 //#include <FL/Fl_PNG_Image.H>
 
 #include "variable.h"
@@ -44,7 +45,7 @@ void se_calc(Fl_Widget*, void*) ;
 void se_clean(Fl_Widget*, void*) ;
 
 
-Fl_Window* w;
+extern Fl_Window* w;
 
 Fl_Group* lcm_group;
 Fl_Group* gcd_group;
@@ -89,6 +90,15 @@ Fl_Output* se_y_output;
 
 
 
+void hide_all(void) ;
+void gcd_cb(Fl_Widget* w_arg, void*) ;
+void lcm_cb(Fl_Widget* w_arg, void*) ;
+void sincos_cb( Fl_Widget* w_arg, void* ) ;
+void heron_cb( Fl_Widget* w_arg, void* ) ;
+void se_cb( Fl_Widget* w_arg, void*) ;
+void twopow_cb( Fl_Widget* w_arg, void*) ;
+void se_notice_cb(Fl_Widget* w_arg, void*) ;
+void make_ui(void);
 
 void hide_all(void) {
 
@@ -101,37 +111,72 @@ void hide_all(void) {
 }
 
 
-void gcd_cb(Fl_Widget* w, void*) {
+void gcd_cb(Fl_Widget* w_arg, void*) {
     hide_all();
     gcd_group->show();
 }
 
 
-void lcm_cb(Fl_Widget* w, void*) {
+void lcm_cb(Fl_Widget* w_arg, void*) {
     hide_all();
     lcm_group->show();
 }
 
 
-void sincos_cb( Fl_Widget* w, void* ) {
+void sincos_cb( Fl_Widget* w_arg, void* ) {
     hide_all();
     sincos_group->show();
     //cout << "sin cos" << endl;
 }
-void heron_cb( Fl_Widget* w, void* ) {
+void heron_cb( Fl_Widget* w_arg, void* ) {
     hide_all();
     heron_group->show();
 }
 
-void se_cb( Fl_Widget* w, void*) {
+void se_cb( Fl_Widget* w_arg, void*) {
     hide_all();
     se_group->show();
 }
 
-void twopow_cb( Fl_Widget* w, void*) {
+
+void twopow_cb( Fl_Widget* w_arg, void*) {
     hide_all();
     twopow_group->show();
 }
+
+
+void se_notice_cb(Fl_Widget* w_arg, void*) {
+
+    fl_message("Although you can\'t input fraction or floating-point number,\n\
+you can still calculate that by some math skill.\n\
+Here is an example:\n\
+\t\t(1/2)x +  3y = 5 ---- (1)\n\
+\t\t    5x + 34y = 54 --- (2)\n\
+As you can see, there is a fraction -- 1/2 --  in our simultaneous equations.\n\
+To deal with this, you can multiply (1) by 2.\n\
+So our (1) will be like this:\n\
+\t\t1x +  6y = 10 --- (3) ( same as (1) )\n\
+Let's replace (1):\n\
+\t\t1x +  6y = 10 --- (3)\n\
+\t\t5x + 34y = 54 --- (2)\n\
+You can type these equations to \"se\" calculator,\n\
+and you will get this:\n\
+\t\tx = 4  y = 1 ( the answers are still correct, aren't they? )\n\
+\n\
+But what if it is floating-point number? (e.g. 3.5, 0.125)\n\
+Don't worry. Just keep multiplying 10 until the dot \".\" can be ignored\n\
+Like:\n\
+\t3.5x + 0.125y = 89 --- (4)\n\
+Multiply (4) by 1000, so (4) will be:\n\
+\t 3500x + 125y = 89000 --- (5)\n\
+Same as (4)\n\
+    ");
+
+}
+
+
+
+
 
 
 
@@ -139,7 +184,7 @@ void twopow_cb( Fl_Widget* w, void*) {
 
 void make_ui(void) {
     w = new Fl_Window(800, 500);
-    w->color((Fl_Color)45);
+    w->color( static_cast<Fl_Color> (45) );
     Fl_Menu_Bar* bar = new Fl_Menu_Bar(160, 0, 1365, 25);
 
     bar->add("gcd", 0, gcd_cb);
@@ -165,17 +210,19 @@ void make_ui(void) {
     gcd_group = new Fl_Group(100, 70, 600, 500);
 
 
+    Fl_Box* gcd_notice = new Fl_Box(320, 100, 100, 30, "split numbers by space \" \"");
+    gcd_notice->labelsize(20);
 
-    gcd_number_input = new Fl_Input(300, 100, 270, 30, "numbers");
+    gcd_number_input = new Fl_Input(300, 150, 270, 30, "numbers");
 
-    Fl_Button* gcd_calc_btn = new Fl_Button(300, 200, 50, 30, "calc");
-    Fl_Button* gcd_clean_btn = new Fl_Button(380, 200, 50, 30, "clean");
+    Fl_Button* gcd_calc_btn = new Fl_Button(300, 250, 50, 30, "calc");
+    Fl_Button* gcd_clean_btn = new Fl_Button(380, 250, 50, 30, "clean");
 
     gcd_calc_btn->callback(gcd_calc, 0);
     gcd_clean_btn->callback(gcd_clean, 0);
 
 
-    gcd_output_text = new Fl_Box(350, 300, 150, 30, "gcd: ");
+    gcd_output_text = new Fl_Box(280, 320, 200, 30, "gcd: ");
 
 
     gcd_group->end();
@@ -316,9 +363,10 @@ void make_ui(void) {
 
 
 
-    se_group = new Fl_Group(100, 70, 600, 500);
+    se_group = new Fl_Group(100, 0, 700, 500);
 
 
+#define down 50 // for se group to move down;
 
     /*
      * a1x+b1y=c1
@@ -326,52 +374,58 @@ void make_ui(void) {
      * 
      * */
 
+    Fl_Box* se_notice = new Fl_Box(300, 50, 200, 40, "Notice: you can only input integer. (e.g. 34, 23) \nif you need to input fraction or floating-point number, ");
+    se_notice->labelsize(20);
 
-    se_a1 = new Fl_Float_Input(250, 100, 60, 35);
+    Fl_Button* se_notice_btn = new Fl_Button(680, 70, 70, 30, "click me");
+    se_notice_btn->callback(se_notice_cb);
+
+
+    se_a1 = new Fl_Float_Input(250, 100+down, 60, 35);
     se_a1->textsize(20);
 
-    Fl_Box* label_11 = new Fl_Box(290, 100, 90, 30, "x + ");
+    Fl_Box* label_11 = new Fl_Box(290, 100+down, 90, 30, "x + ");
     label_11->labelsize(20);
     
-    se_b1 = new Fl_Float_Input(350, 100, 60, 35);
+    se_b1 = new Fl_Float_Input(350, 100+down, 60, 35);
     se_b1->textsize(20);
 
-    Fl_Box* label_12 = new Fl_Box(390, 100, 90, 30, "y = ");
+    Fl_Box* label_12 = new Fl_Box(390, 100+down, 90, 30, "y = ");
     label_12->labelsize(20);
 
-    se_c1 = new Fl_Float_Input(450, 100, 60, 35);
+    se_c1 = new Fl_Float_Input(450, 100+down, 60, 35);
     se_c1->textsize(20);
 
 
-    se_a2 = new Fl_Float_Input(250, 100+70, 60, 35);
+    se_a2 = new Fl_Float_Input(250, 100+70+down, 60, 35);
     se_a2->textsize(20);
 
-    Fl_Box* label_21 = new Fl_Box(290, 100+70, 90, 30, "x + ");
+    Fl_Box* label_21 = new Fl_Box(290, 100+70+down, 90, 30, "x + ");
     label_21->labelsize(20);
     
-    se_b2 = new Fl_Float_Input(350, 100+70, 60, 35);
+    se_b2 = new Fl_Float_Input(350, 100+70+down, 60, 35);
     se_b2->textsize(20);
 
-    Fl_Box* label_22 = new Fl_Box(390, 100+70, 90, 30, "y = ");
+    Fl_Box* label_22 = new Fl_Box(390, 100+70+down, 90, 30, "y = ");
     label_22->labelsize(20);
 
-    se_c2 = new Fl_Float_Input(450, 100+70, 60, 35);
+    se_c2 = new Fl_Float_Input(450, 100+70+down, 60, 35);
     se_c2->textsize(20);
 
 
     
-    Fl_Button* se_calc_btn = new Fl_Button(310, 260, 50, 30, "calc");
+    Fl_Button* se_calc_btn = new Fl_Button(310, 260+down, 50, 30, "calc");
     se_calc_btn->callback(se_calc);
 
-    Fl_Button* se_clean_btn = new Fl_Button(390, 260, 50, 30, "clean");
+    Fl_Button* se_clean_btn = new Fl_Button(390, 260+down, 50, 30, "clean");
     se_clean_btn->callback(se_clean);
 
     
-    se_x_output = new Fl_Output(290, 320, 80, 50, "x = ");
+    se_x_output = new Fl_Output(290, 320+down, 80, 50, "x = ");
     se_x_output->textsize(20);
     se_x_output->labelsize(20);
 
-    se_y_output = new Fl_Output(450, 320, 80, 50, "y = ");
+    se_y_output = new Fl_Output(450, 320+down, 80, 50, "y = ");
     se_y_output->textsize(20);
     se_y_output->labelsize(20);
 
