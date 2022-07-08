@@ -26,20 +26,32 @@
 
 #define PI 3.14159265359
 
-typedef unsigned long long ul;
+typedef unsigned long long ull;
 
-ul GCD(std::vector<ul> nums, int length=2);
+ull GCD(std::vector<int> nums, int length=2);
 
-float heron_area_calc(float a, float b, float c);
+double heron_area_calc(double a, double b, double c);
 
-std::vector<std::string> se_ans( float a1, float a2, float b1, float b2, float c1, float c2 );
+std::vector<std::string> se_ans( double a1, double a2, double b1, double b2, double c1, double c2 );
 
+/*
+void gcd_calc(Fl_Widget*, void*);
+void lcm_calc(Fl_Widget*, void*);
+void sincos_calc(Fl_Widget*, void*);
+void heron_calc(Fl_Widget*, void*);
+void se_calc(Fl_Widget*, void*);
 
+void gcd_clean(Fl_Widget*, void*);
+void lcm_clean(Fl_Widget*, void*);
+void sincos_clean(Fl_Widget*, void*);
+void heron_clean(Fl_Widget*, void*);
+void se_clean(Fl_Widget*, void*);
+*/
 void gcd_calc(Fl_Widget*, void*) {
 
 
 
-    std::vector<ul> numbers;
+    std::vector<int> numbers;
 
     std::string str(gcd_number_input->value());
 
@@ -71,7 +83,7 @@ void gcd_calc(Fl_Widget*, void*) {
 
 
 
-                    fl_message(msg, 0);
+                    fl_message("invaild input: \"%s\"", token_charp);
                     //fl_message(token);
                 }
             }
@@ -97,16 +109,16 @@ void gcd_calc(Fl_Widget*, void*) {
                 char* str_charp = const_cast<char*>(str.c_str());
 
 
-                sprintf(msg, "invaild input: \"%s\"", str_charp);
+                // sprintf(msg, "invaild input: \"%s\"", str_charp);
 
-                fl_message(msg);
+                fl_message("invaild input: \"%s\"", str_charp);
 
 
             }
         }
         if ( numbers.size() > 1 ) {
 
-            ul gcd = GCD(numbers, numbers.size());
+            ull gcd = GCD(numbers, numbers.size());
 
 
             char buf[20];
@@ -150,7 +162,7 @@ void gcd_clean(Fl_Widget*, void*) {
 
 void lcm_calc(Fl_Widget* , void*) {
 
-    std::vector<ul> numbers;
+    std::vector<int> numbers;
 
     std::string str(lcm_number_input->value());
 
@@ -177,9 +189,9 @@ void lcm_calc(Fl_Widget* , void*) {
 
                     char* token_charp = const_cast<char*>(token.c_str());
 
-                    sprintf(msg, "invaild input: \"%s\"", token_charp);
+                    // sprintf(msg, "invaild input: \"%s\"", token_charp);
 
-                    fl_message(msg);
+                    fl_message("invaild input: \"%s\"", token_charp);
                 }
             }
 
@@ -199,9 +211,9 @@ void lcm_calc(Fl_Widget* , void*) {
                 char* str_charp = const_cast<char*>(str.c_str());
 
 
-                sprintf(msg, "invaild input: \"%s\"", str_charp);
+                // sprintf(msg, "invaild input: \"%s\"", str_charp);
 
-                fl_message(msg);
+                fl_message("invaild input: \"%s\"", str_charp);
             }
 
         }
@@ -209,7 +221,7 @@ void lcm_calc(Fl_Widget* , void*) {
 
         if ( numbers.size() > 1 ) {
 
-            ul gcd = GCD(numbers, numbers.size()),
+            ull gcd = GCD(numbers, numbers.size()),
                 lcm,
                 product=1;
 
@@ -295,7 +307,7 @@ void sincos_clean(Fl_Widget*, void*) {
 
 void heron_calc(Fl_Widget*, void*) {
 
-    float ans;
+    double ans;
 
     ans = heron_area_calc( 
             atof(heron_a->value()), 

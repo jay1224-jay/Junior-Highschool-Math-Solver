@@ -2,10 +2,21 @@
 //#define VAR_H
 
 extern Fl_Window* w;
-extern void gcd_calc(Fl_Widget*, void*);
 extern Fl_Input* gcd_number_input;
 extern Fl_Box* gcd_output_text;
+
+
+extern void gcd_calc(Fl_Widget*, void*);
+extern void lcm_calc(Fl_Widget*, void*);
+extern void sincos_calc(Fl_Widget*, void*);
+extern void heron_calc(Fl_Widget*, void*);
+extern void se_calc(Fl_Widget*, void*);
+
 extern void gcd_clean(Fl_Widget*, void*);
+extern void lcm_clean(Fl_Widget*, void*);
+extern void sincos_clean(Fl_Widget*, void*);
+extern void heron_clean(Fl_Widget*, void*);
+extern void se_clean(Fl_Widget*, void*);
 
 extern Fl_Input* lcm_number_input;
 extern Fl_Box* lcm_output_text;

@@ -29,7 +29,7 @@ using namespace std;
 // global var
 //
 
-
+/*
 void lcm_calc(Fl_Widget* , void*);
 
 void lcm_clean(Fl_Widget* , void*);
@@ -43,9 +43,9 @@ void heron_clean(Fl_Widget*, void*) ;
 
 void se_calc(Fl_Widget*, void*) ;
 void se_clean(Fl_Widget*, void*) ;
+*/
 
-
-extern Fl_Window* w;
+Fl_Window* w;
 
 Fl_Group* lcm_group;
 Fl_Group* gcd_group;
